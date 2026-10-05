@@ -25,9 +25,31 @@ const max = Math.max(...months.map(m => m[1]));
 $("chart").innerHTML = months.map(([m, v]) =>
   `<div class="bar"><span>${v}</span><i style="height:${(v / max) * 75}%"></i><span>${m}</span></div>`).join("");
 
-// Enquiry form (front-end only confirmation)
-$("enquiryForm").addEventListener("submit", e => {
+// Enquiry form: emails the enquiry through FormSubmit (free, no server needed)
+const TO = "shreya.sinha_mba25@gsv.ac.in";
+$("enquiryForm").addEventListener("submit", async e => {
   e.preventDefault();
-  $("formMsg").textContent = "Thank you! Our team will contact you within 4 business hours.";
-  e.target.reset();
+  const f = e.target, msg = $("formMsg"), data = Object.fromEntries(new FormData(f));
+  data._subject = `New enquiry from ${data.name}: ${data.service}`;
+  msg.style.color = "";
+  msg.textContent = "Sending...";
+  try {
+    const res = await fetch("https://formsubmit.co/ajax/" + TO, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(data)
+    });
+    const out = await res.json();
+    if (!res.ok || String(out.success) !== "true") throw new Error(out.message || "failed");
+    msg.textContent = "Thank you! Our team will contact you within 4 business hours.";
+    f.reset();
+  } catch (err) {
+    // Fallback so an enquiry is never lost: open the visitor's email app
+    msg.style.color = "#b3261e";
+    msg.textContent = "Could not send online. ";
+    const a = document.createElement("a");
+    a.href = `mailto:${TO}?subject=${encodeURIComponent("Enquiry: " + data.service)}&body=${encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)}`;
+    a.textContent = "Send it from your email app instead.";
+    msg.appendChild(a);
+  }
 });
