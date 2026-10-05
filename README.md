@@ -52,7 +52,7 @@ README.md
 3. Your live link will be `https://username.github.io/YourName-BusinessApp/`.
 
 ## Note
-Data is sample data. The enquiry form emails shreya.sinha_mba25@gsv.ac.in through FormSubmit. **Activate it once:** open the live GitHub Pages site, submit the form, then click the confirmation link FormSubmit sends to that inbox (check Spam). It does not work when index.html is opened directly from the computer.
+Data is sample data. The enquiry form emails shreya.sinha_mba25@gsv.ac.in through FormSubmit. **Activate it once:** after publishing, submit the form on the live GitHub Pages site, complete the "I'm not a robot" check, then click the confirmation link FormSubmit emails to that inbox (check Spam). After that, every visitor enquiry arrives in the inbox.
 
 ## Contact (used on the site)
 Email: shreya.sinha_mba25@gsv.ac.in | Phone: +91 76670 48474 | LinkedIn: https://www.linkedin.com/in/shreyagsv
